@@ -10,10 +10,46 @@ const User = db.define('user', {
   username: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false
+    allowNull: false,
+    validator: {
+      notEmpty: true
+    }
   },
   password: {
     type: Sequelize.STRING,
+    allowNull: false,
+    validator: {
+      notEmpty: true
+    }
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validator: {
+      isEmail: true,
+      notEmpty: true
+    }
+  },
+  first_name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validator: {
+      notEmpty: true
+    }
+  },
+  last_name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validator: {
+      notEmpty: true
+    }
+  },
+  date_of_birth: {
+    type: Sequelize.DATE,
+    allowNull: false,
+    validator: {
+      notEmpty: true
+    }
   }
 })
 
