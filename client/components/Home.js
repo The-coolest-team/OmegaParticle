@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import Products from "./Products";
 
 /**
  * COMPONENT
@@ -10,6 +11,7 @@ export const Home = (props) => {
   return (
     <div>
       <h3>Welcome to the Home Page</h3>
+      <Products />
     </div>
   );
 };
