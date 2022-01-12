@@ -11,7 +11,7 @@ class Signup extends React.Component {
       password: "",
       first_name: "",
       last_name: "",
-      date_of_birth: "",
+      // date_of_birth: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -30,6 +30,8 @@ class Signup extends React.Component {
       username: this.state.username,
       email: this.state.email,
       password: this.state.password,
+      first_name: this.state.first_name,
+      last_name: this.state.last_name
     });
   }
 
@@ -89,7 +91,7 @@ class Signup extends React.Component {
               />
             </div>
             <br/>
-            <div>
+            {/* <div>
               <label name="date_of_birth">date of birth: </label>
               <input
                 name="date_of_birth"
@@ -97,7 +99,7 @@ class Signup extends React.Component {
                 onChange={this.handleChange}
                 value={this.state.date_of_birth}
               />
-            </div>
+            </div> */}
           </ul>
           <button type="submit">submit</button>
         </form>

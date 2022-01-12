@@ -44,13 +44,13 @@ const User = db.define('user', {
       notEmpty: true
     }
   },
-  date_of_birth: {
-    type: Sequelize.DATE,
-    allowNull: false,
-    validator: {
-      notEmpty: true
-    }
-  }
+  // date_of_birth: {
+  //   type: Sequelize.DATE,
+  //   allowNull: false,
+  //   validator: {
+  //     notEmpty: true
+  //   }
+  // }
 })
 
 module.exports = User
