@@ -8,7 +8,7 @@ import Cart from "./components/Cart";
 import SingleProduct from "./components/SingleProduct";
 import SignUp from "./components/SignUp";
 
- * COMPONENT
+ /* COMPONENT
  */
 class Routes extends Component {
   componentDidMount() {
@@ -33,7 +33,7 @@ class Routes extends Component {
             <Route path="/" exact component={Login} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={SignUp} />
-            <Route path="/home" component={Home} />
+            <Route exact path="/home" component={Home} />
             <Route path="/cart" component={Cart} />
             {/* Added this */}
             <Route exact path="/home/:productId" component={SingleProduct} />
