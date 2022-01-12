@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { fetchSingleProduct } from "../store/singleProduct";
+import { addSingleProduct } from "../store/cart";
 
 const SingleProduct = (props) => {
   useEffect(() => {
@@ -13,6 +14,14 @@ const SingleProduct = (props) => {
       <p>{props.product.name}</p>
       <p>{props.product.price}</p>
       <p>{props.product.description}</p>
+      <button
+        onClick={() => {
+          console.log(props);
+        }}
+      >
+        {" "}
+        Add to cart
+      </button>
     </div>
   );
 };
@@ -20,6 +29,7 @@ const SingleProduct = (props) => {
 const mapStateToProps = (state) => {
   return {
     product: state.singleProductReducer,
+    userId: state.auth.id,
   };
 };
 
@@ -28,6 +38,9 @@ const mapDispatchToProps = (dispatch) => {
     fetchSingleProduct: (id) => {
       dispatch(fetchSingleProduct(id));
     },
+    addToCart: (id) => {
+      dispatch(addSingleProduct(id))
+    }
   };
 };
 

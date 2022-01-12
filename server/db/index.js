@@ -10,8 +10,9 @@ const HistoryTable = db.define('historyTable', {}, { timestamps: false })
 const AnimalTable = db.define('animalTable', {}, { timestamps: false })
 
 //associations could go here!
-User.belongsToMany(Product, {as: "userIdC", through: CartTable})
-Product.belongsToMany(User, {as: "productIdC", through: CartTable})
+
+User.belongsToMany(Product, {through: CartTable})
+Product.belongsToMany(User, {through: CartTable})
 
 User.belongsToMany(Product, {as: "userIdH", through: HistoryTable})
 Product.belongsToMany(User, {as: "productIdH", through: HistoryTable})
