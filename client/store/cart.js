@@ -14,10 +14,20 @@ export const addSingleProduct = (id) =>
 
   };
 
-  export default function singleProductReducer(state = [], action) {
+
+  // action.item = {id: 1, name: 'blue collar', price: 14.99}
+  // state = []
+  export default function singleProductReducer(state = [{id: 1}], action) {
     switch (action.type) {
       case ADD_TO_CART:
-        return action.item;
+        for (let i = 0; i < state.length; i++) {
+          if (state[i].id === action.item.id) {
+            state[i].quantity++
+            return state
+          }
+        }
+        action.item.quantity = 1;
+        return [...state, action.item]
       default:
         return state;
     }
