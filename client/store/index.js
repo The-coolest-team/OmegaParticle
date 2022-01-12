@@ -5,11 +5,13 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import auth from "./auth";
 import singleProductReducer from "./singleProduct";
 import products from "./products";
+import createUserReducer from './newUser'
 
 const reducer = combineReducers({
   auth,
   singleProductReducer,
   products,
+  createUserReducer
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
@@ -18,3 +20,4 @@ const store = createStore(reducer, middleware);
 
 export default store;
 export * from "./auth";
+
