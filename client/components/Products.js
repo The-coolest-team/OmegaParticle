@@ -1,35 +1,33 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { getProducts } from "../store/products";
 
-export const Products = (props) => {
-  let productList = [];
+const Products = () => {
+  let products = useSelector((state) => state.products);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    let productList = props.getProducts();
+    dispatch(getProducts());
   }, []);
 
   return (
     <div>
-      <h1> Hello from Products Page</h1>
       <div>
-        {/* {productList.map((product) => {
-          return <div>{product}</div>;
-        })} */}
+        <h1> Hello from Products Page</h1>
+        {products.map((product) => {
+          return (
+            <div key={product.id}>
+              <div>{product.name}</div>
+              <div>{product.price}</div>
+              <img src={product.image_url} />
+            </div>
+          );
+        })}
       </div>
+      <div>{}</div>
     </div>
   );
 };
 
-const mapState = (state) => {
-  return {
-    products: state.products,
-  };
-};
-
-const mapDispatch = (dispatch, history) => {
-  return {
-    getProducts: () => dispatch(getProducts()),
-  };
-};
-
-export default connect(mapState, mapDispatch)(Products);
+export default Products;
