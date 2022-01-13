@@ -7,6 +7,7 @@ import { me } from "./store";
 import Cart from "./components/Cart";
 import SingleProduct from "./components/SingleProduct";
 import SignUp from "./components/SignUp";
+import GuestCart from "./components/GuestCart"
 
  /* COMPONENT
  */
@@ -34,7 +35,7 @@ class Routes extends Component {
             <Route path="/login" component={Login} />
             <Route path="/signup" component={SignUp} />
             <Route exact path="/home" component={Home} />
-            <Route path="/cart" component={Cart} />
+            <Route path="/cart" component={GuestCart} />
             {/* Added this */}
             <Route exact path="/home/:productId" component={SingleProduct} />
           </Switch>

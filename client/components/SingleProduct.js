@@ -8,6 +8,8 @@ const SingleProduct = (props) => {
     props.fetchSingleProduct(props.match.params.productId);
   }, []);
 
+  let products = [];
+
   return (
     <div>
       <img src={props.product.image_url}></img>
@@ -16,10 +18,22 @@ const SingleProduct = (props) => {
       <p>{props.product.description}</p>
       <button
         onClick={() => {
-          console.log(props);
+          if (props.userId === undefined) {
+            const guestCart = window.localStorage.getItem("cart");
+            let productDetails = {
+              productId: props.product.id,
+              productName: props.product.name,
+              productPrice: props.product.price,
+            };
+
+            if (guestCart) {
+              products = JSON.parse(guestCart);
+            }
+            products.push(productDetails);
+            window.localStorage.setItem("cart", JSON.stringify(products));
+          }
         }}
       >
-        {" "}
         Add to cart
       </button>
     </div>
@@ -39,8 +53,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(fetchSingleProduct(id));
     },
     addToCart: (id) => {
-      dispatch(addSingleProduct(id))
-    }
+      dispatch(addSingleProduct(id));
+    },
   };
 };
 
