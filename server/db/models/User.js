@@ -30,27 +30,31 @@ const User = db.define('user', {
       notEmpty: true
     }
   },
-  first_name: {
+  firstName: {
     type: Sequelize.STRING,
     allowNull: false,
     validator: {
       notEmpty: true
     }
   },
-  last_name: {
+  lastName: {
     type: Sequelize.STRING,
     allowNull: false,
     validator: {
       notEmpty: true
     }
   },
-  // date_of_birth: {
-  //   type: Sequelize.DATE,
-  //   allowNull: false,
-  //   validator: {
-  //     notEmpty: true
-  //   }
-  // }
+  dateOfBirth: {
+    type: Sequelize.DATE,
+    // allowNull: false,
+    // validator: {
+    //   notEmpty: true
+    // }
+  },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  }
 })
 
 module.exports = User

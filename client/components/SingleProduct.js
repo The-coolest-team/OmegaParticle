@@ -9,7 +9,7 @@ const SingleProduct = (props) => {
 
   return (
     <div>
-      <img src={props.product.image_url}></img>
+      <img src={props.product.imageUrl}></img>
       <p>{props.product.name}</p>
       <p>{props.product.price}</p>
       <p>{props.product.description}</p>

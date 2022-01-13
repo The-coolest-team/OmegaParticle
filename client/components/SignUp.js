@@ -9,8 +9,8 @@ class Signup extends React.Component {
       username: "",
       email: "",
       password: "",
-      first_name: "",
-      last_name: "",
+      firstName: "",
+      lastName: "",
       // date_of_birth: "",
     };
     this.handleChange = this.handleChange.bind(this);
@@ -30,8 +30,8 @@ class Signup extends React.Component {
       username: this.state.username,
       email: this.state.email,
       password: this.state.password,
-      first_name: this.state.first_name,
-      last_name: this.state.last_name
+      firstName: this.state.firstName,
+      lastName: this.state.lastName
     });
   }
 
@@ -72,22 +72,22 @@ class Signup extends React.Component {
             </div>
             <br/>
             <div>
-              <label name="first_name">first name: </label>
+              <label name="firstName">first name: </label>
               <input
-                name="first_name"
+                name="firstName"
                 type="text"
                 onChange={this.handleChange}
-                value={this.state.first_name}
+                value={this.state.firstName}
               />
             </div>
             <br/>
             <div>
-              <label name="last_name">last name: </label>
+              <label name="lastName">last name: </label>
               <input
-                name="last_name"
+                name="lastName"
                 type="text"
                 onChange={this.handleChange}
-                value={this.state.last_name}
+                value={this.state.lastName}
               />
             </div>
             <br/>

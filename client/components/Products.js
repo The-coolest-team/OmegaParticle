@@ -20,7 +20,7 @@ const Products = () => {
             <div key={product.id}>
               <div>{product.name}</div>
               <div>{product.price}</div>
-              <img src={product.image_url} />
+              <img src={product.imageUrl} />
             </div>
           );
         })}
