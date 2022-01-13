@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getProducts } from "../store/products";
+import { Link } from "react-router-dom";
 
 const Products = () => {
   let products = useSelector((state) => state.products);
@@ -18,9 +19,11 @@ const Products = () => {
         {products.map((product) => {
           return (
             <div key={product.id}>
-              <div>{product.name}</div>
-              <div>{product.price}</div>
-              <img src={product.imageUrl} />
+              <Link to={`/home/${product.id}`}>
+                <div>{product.name}</div>
+                <div>{product.price}</div>
+                <img src={product.imageUrl} />
+              </Link>
             </div>
           );
         })}

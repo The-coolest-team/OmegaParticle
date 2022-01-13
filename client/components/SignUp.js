@@ -90,16 +90,6 @@ class Signup extends React.Component {
                 value={this.state.lastName}
               />
             </div>
-            <br/>
-            {/* <div>
-              <label name="date_of_birth">date of birth: </label>
-              <input
-                name="date_of_birth"
-                type="text"
-                onChange={this.handleChange}
-                value={this.state.date_of_birth}
-              />
-            </div> */}
           </ul>
           <button type="submit">submit</button>
         </form>
