@@ -17,13 +17,14 @@ const Product = db.define("product", {
     },
   },
   price: {
-    type: Sequelize.FLOAT,
-    allowNull: false,
-    validator: {
-      notEmpty: true,
-    },
+    type: Sequelize.INTEGER,
+    allowNull: false
   },
-  image_url: {
+  stock: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  imageUrl: {
     type: Sequelize.STRING,
     defaultValue:
       "https://m.media-amazon.com/images/I/71cnPzmu7WL._AC_SL1500_.jpg",

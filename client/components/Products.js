@@ -22,7 +22,7 @@ const Products = () => {
               <Link to={`/home/${product.id}`}>
                 <div>{product.name}</div>
                 <div>{product.price}</div>
-                <img src={product.image_url} />
+                <img src={product.imageUrl} />
               </Link>
             </div>
           );
