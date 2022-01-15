@@ -27,7 +27,9 @@ class GuestCart extends React.Component {
           <Link to={"/home"}>
             <button>BUY MORE ITEMS</button>
           </Link>
-          <button>CHECK OUT</button>
+          <Link to={"/checkout"}>
+            <button>CHECK OUT</button>
+          </Link>
         </ul>
       );
     }

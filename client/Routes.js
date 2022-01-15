@@ -10,6 +10,7 @@ import SignUp from "./components/SignUp";
 import GuestCart from "./components/GuestCart";
 import Admin from "./components/Admin";
 import SingleProductAdmin from "./components/SingleProductAdmin";
+import Checkout from "./components/Checkout";
 
 /* COMPONENT
  */
@@ -30,10 +31,15 @@ class Routes extends Component {
             {/* Added this*/}
             {isAdmin && <Route exact path="/admin" component={Admin} />}
             {isAdmin && (
-              <Route exact path="/admin/:productId" component={SingleProductAdmin} />
-              )}
-              <Route exact path="/home/:productId" component={SingleProduct} />
+              <Route
+                exact
+                path="/admin/:productId"
+                component={SingleProductAdmin}
+              />
+            )}
+            <Route exact path="/home/:productId" component={SingleProduct} />
             <Redirect to="/home" />
+            <Route exact path="/checkout" component={Checkout} />
           </Switch>
         ) : (
           <Switch>
@@ -44,6 +50,7 @@ class Routes extends Component {
             <Route path="/cart" component={GuestCart} />
             {/* Added this */}
             <Route exact path="/home/:productId" component={SingleProduct} />
+            <Route exact path="/checkout" component={Checkout} />
           </Switch>
         )}
       </div>
