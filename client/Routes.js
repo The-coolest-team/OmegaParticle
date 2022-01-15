@@ -4,7 +4,6 @@ import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login } from "./components/AuthForm";
 import Home from "./components/Home";
 import { me } from "./store";
-import Cart from "./components/Cart";
 import SingleProduct from "./components/SingleProduct";
 import SignUp from "./components/SignUp";
 import GuestCart from "./components/GuestCart";
@@ -27,7 +26,7 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route exact path="/home" component={Home} />
-            <Route path="/cart" component={Cart} />
+            <Route path="/cart" component={GuestCart} />
             {/* Added this*/}
             {isAdmin && <Route exact path="/admin" component={Admin} />}
             {isAdmin && (
@@ -38,8 +37,8 @@ class Routes extends Component {
               />
             )}
             <Route exact path="/home/:productId" component={SingleProduct} />
-            <Redirect to="/home" />
             <Route exact path="/checkout" component={Checkout} />
+            <Redirect to="/home" />
           </Switch>
         ) : (
           <Switch>
