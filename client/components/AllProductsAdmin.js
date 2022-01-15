@@ -1,40 +1,41 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import {Link} from 'react-router-dom'
-
+import React from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { getProducts } from "../store/products";
+import { CreateProduct } from "./CreateProduct";
 
-function AllProductsAdmin({allProducts}) {
+function AllProductsAdmin({ allProducts }) {
   return allProducts.length ? (
     <div>
-      {
-        allProducts.map((product) => {
-          return (
-            <div key={product.id}>
-              <Link to={`/home/${product.id}`}>
-                <img src={product.imageUrl} style={{width: '300px'}} />
-                <div>{product.name}</div>
-                <div>{product.price}</div>
-              </Link>
-            </div>
-          );
-        })
-      }
+      {allProducts.map((product) => {
+        return (
+          <div key={product.id}>
+            <Link to={`/admin/${product.id}`}>
+              <img src={product.imageUrl} style={{ width: "300px" }} />
+              <div>{product.name}</div>
+              <div>{product.price}</div>
+            </Link>
+          </div>
+        );
+      })}
     </div>
-  ) : (<h3> Loading... </h3>)
+  ) : (
+    <h3> Loading... </h3>
+  );
 }
 
 let mapState = (state) => {
   return {
-    allProducts: state.products
-  }
-}
+    allProducts: state.products,
+  };
+};
 
 let mapDispatch = (dispatch) => {
   return {
-    getProducts: () => {dispatch(getProducts())}
-  }
-}
+    getProducts: () => {
+      dispatch(getProducts());
+    },
+  };
+};
 
-export default connect(mapState, mapDispatch)(AllProductsAdmin)
-
+export default connect(mapState, mapDispatch)(AllProductsAdmin);

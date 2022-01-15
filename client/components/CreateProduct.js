@@ -1,6 +1,6 @@
 import React from "react";
 
-export class EditProductAdmin extends React.Component {
+export class CreateProduct extends React.Component {
   constructor(props) {
     super(props);
 
@@ -8,27 +8,20 @@ export class EditProductAdmin extends React.Component {
       name: "",
       description: "",
       stock: 0,
-      price: 0
+      price: 0,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentDidUpdate(prevProps) {
-    if(prevProps.product.id !== this.props.product.id) {
-      this.setState({
-        name: this.props.product.name,
-        description: this.props.product.description,
-        stock: this.props.product.stock,
-        price: this.props.product.price
-      })
-    }
-    console.log("MOAN", prevProps)
-  }
-
   handleSubmit(event) {
     event.preventDefault();
-
+    this.setState({
+      name: "",
+      description: "",
+      stock: 0,
+      price: 0,
+    });
   }
 
   handleChange(event) {
@@ -40,8 +33,8 @@ export class EditProductAdmin extends React.Component {
   render() {
     return (
       <div>
-        <h1>UPDATE THIS PRODUCT</h1>
         <form onSubmit={this.handleSubmit}>
+          <h1> New Product Form</h1>
           <label>Name:</label>
           <input
             name="name"
@@ -56,13 +49,6 @@ export class EditProductAdmin extends React.Component {
             onChange={this.handleChange}
           />
           <br />
-          <label>Price:</label>
-          <input
-            name="price"
-            value={this.state.price}
-            onChange={this.handleChange}
-          />
-          <br />
           <label>Stock:</label>
           <input
             name="stock"
@@ -70,11 +56,17 @@ export class EditProductAdmin extends React.Component {
             onChange={this.handleChange}
           />
           <br />
-          <button type="submit">Update</button>
+          <label>Price:</label>
+          <input
+            name="price"
+            value={this.state.price}
+            onChange={this.handleChange}
+          />
+          <button type="submit"> SUBMIT</button>
         </form>
       </div>
     );
   }
 }
 
-export default EditProductAdmin;
+export default CreateProduct;
