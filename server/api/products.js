@@ -19,8 +19,8 @@ router.get("/:productId", async (req, res, next) => {
   try {
     let singleProduct = await Product.findByPk(req.params.productId);
     let { id, name, description, price, stock, imageUrl } = singleProduct;
-    singleProduct = [id, name, description, price, stock, imageUrl];
-    res.send(singleProduct);
+    singleProduct = { id, name, description, price, stock, imageUrl };
+    res.json(singleProduct);
   } catch (err) {
     next(err);
   }
