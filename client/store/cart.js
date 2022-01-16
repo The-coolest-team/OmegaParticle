@@ -38,11 +38,8 @@ export const updateCart = (userId) => {
 export const checkout = (userId) => {
   return async (dispatch) => {
     const token = window.localStorage.getItem("token")
-    const { data:completedCart } = await axios.put(`/api/cart/${userId}/checkout`, {
-      headers: {
-        authorization: token
-      }
-    })
+    const headers = { Authorization: token }
+    const { data:completedCart } = await axios.put(`/api/cart/${userId}/checkout`, { headers })
     dispatch(_checkout(completedCart))
   }
 }
