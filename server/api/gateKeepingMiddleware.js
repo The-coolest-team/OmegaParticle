@@ -4,10 +4,11 @@ const {
 
 const requireToken = async (req, res, next) => {
   try {
-    console.log("req.headers:", req.headers)
+    console.log("req.headers:", req.headers);
     const token = req.headers.authorization;
+    console.log("token:", token);
     const user = await User.findByToken(token);
-    console.log("USER:", user)
+    console.log("USER:", user);
     req.user = user;
     next();
   } catch (e) {
@@ -26,14 +27,14 @@ const isAdmin = (req, res, next) => {
 
 const isUser = (req, res, next) => {
   if (parseInt(req.user.id) !== parseInt(req.params.userId)) {
-    return res.status(403).send("Unable to view others' carts")
+    return res.status(403).send("Unable to view others' carts");
   }
-  console.log("cleared isUser middleware")
-  next()
-}
+  console.log("cleared isUser middleware");
+  next();
+};
 
 module.exports = {
   requireToken,
   isAdmin,
-  isUser
+  isUser,
 };

@@ -1,58 +1,66 @@
-import axios from 'axios'
+import axios from "axios";
 
-const UPDATE_CART = "UPDATE_CART"
-const CHECKOUT = "CHECKOUT"
+const UPDATE_CART = "UPDATE_CART";
+const CHECKOUT = "CHECKOUT";
 
 const _updateCart = (updatedCart) => ({
   type: UPDATE_CART,
-  updatedCart
-})
+  updatedCart,
+});
 
 const _checkout = (completedCart) => ({
   type: CHECKOUT,
-  completedCart
-})
+  completedCart,
+});
 
 export const updateCart = (userId) => {
   return async (dispatch) => {
-    const token = window.localStorage.getItem("token")
-    const localCart = JSON.parse(window.localStorage.getItem("cart"))
+    const token = window.localStorage.getItem("token");
+    const localCart = JSON.parse(window.localStorage.getItem("cart"));
     if (Array.isArray(localCart)) {
       localCart.map((item) => {
-        let {productId, quantity} = item
-        return {productId, quantity}
-      })
-      console.log("localCart:", localCart)
-      const { data:updatedCart } = await axios.post(`/api/cart/${userId}`, {
-        localCart: localCart
-      }, {
-        headers: {
-          authorization: token
-        }
+        let { productId, quantity } = item;
+        return { productId, quantity };
       });
+      console.log("localCart:", localCart);
+      const { data: updatedCart } = await axios.post(
+        `/api/cart/${userId}`,
+        {
+          localCart: localCart,
+        },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
       dispatch(_updateCart(updatedCart));
     }
-  }
+  };
 };
 
 export const checkout = (userId) => {
   return async (dispatch) => {
-    const token = window.localStorage.getItem("token")
-    const headers = { Authorization: token }
-    const { data:completedCart } = await axios.put(`/api/cart/${userId}/checkout`, { headers })
-    dispatch(_checkout(completedCart))
-  }
-}
+    const token = window.localStorage.getItem("token");
+    const headers = { Authorization: token };
+    const { data: completedCart } = await axios.put(
+      `/api/cart/${userId}/checkout`,
+      null,
+      { headers }
+    );
+    dispatch(_checkout(completedCart));
+  };
+};
 
 export default (state = [], action) => {
   switch (action.type) {
     case UPDATE_CART:
-      window.localStorage.setItem("cart", JSON.stringify(action.updatedCart))
-      console.log("CART IS UPDATED")
-      return action.updatedCart
+      window.localStorage.setItem("cart", JSON.stringify(action.updatedCart));
+      console.log("CART IS UPDATED");
+      return action.updatedCart;
     case CHECKOUT:
-      return action.completedCart
+      return action.completedCart;
     default:
       return state;
   }
-}
+};
