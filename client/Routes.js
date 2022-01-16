@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login } from "./components/AuthForm";
@@ -7,7 +7,7 @@ import { me } from "./store";
 import Cart from "./components/Cart";
 import SingleProduct from "./components/SingleProduct";
 import SignUp from "./components/SignUp";
-import GuestCart from "./components/GuestCart";
+// import GuestCart from "./components/GuestCart";
 import Admin from "./components/Admin";
 import SingleProductAdmin from "./components/SingleProductAdmin";
 import Checkout from "./components/Checkout";
@@ -38,8 +38,8 @@ class Routes extends Component {
               />
             )}
             <Route exact path="/home/:productId" component={SingleProduct} />
-            <Redirect to="/home" />
             <Route exact path="/checkout" component={Checkout} />
+            <Redirect to="/home" />
           </Switch>
         ) : (
           <Switch>
@@ -47,10 +47,11 @@ class Routes extends Component {
             <Route path="/login" component={Login} />
             <Route path="/signup" component={SignUp} />
             <Route exact path="/home" component={Home} />
-            <Route path="/cart" component={GuestCart} />
+            <Route path="/cart" component={Cart} />
             {/* Added this */}
             <Route exact path="/home/:productId" component={SingleProduct} />
             <Route exact path="/checkout" component={Checkout} />
+            <Redirect to="/home" />
           </Switch>
         )}
       </div>

@@ -1,34 +1,61 @@
 import axios from 'axios'
 
-const ADD_TO_CART = "ADD_TO_CART"
+const UPDATE_CART = "UPDATE_CART"
+const CHECKOUT = "CHECKOUT"
 
-const addToCart = (item) => ({
-  type: ADD_TO_CART,
-  item
+const _updateCart = (updatedCart) => ({
+  type: UPDATE_CART,
+  updatedCart
 })
 
-export const addSingleProduct = (id) =>
-  async function (dispatch) {
-    const { data } = await axios.get(`/api/products/${id}`);
-    dispatch(addToCart(data));
+const _checkout = (completedCart) => ({
+  type: CHECKOUT,
+  completedCart
+})
 
-  };
-
-
-  // action.item = {id: 1, name: 'blue collar', price: 14.99}
-  // state = []
-  export default function singleProductReducer(state = [{id: 1}], action) {
-    switch (action.type) {
-      case ADD_TO_CART:
-        for (let i = 0; i < state.length; i++) {
-          if (state[i].id === action.item.id) {
-            state[i].quantity++
-            return state
-          }
+export const updateCart = (userId) => {
+  return async (dispatch) => {
+    const token = window.localStorage.getItem("token")
+    const localCart = JSON.parse(window.localStorage.getItem("cart"))
+    if (Array.isArray(localCart)) {
+      localCart.map((item) => {
+        let {productId, quantity} = item
+        return {productId, quantity}
+      })
+      console.log("localCart:", localCart)
+      const { data:updatedCart } = await axios.post(`/api/cart/${userId}`, {
+        localCart: localCart
+      }, {
+        headers: {
+          authorization: token
         }
-        action.item.quantity = 1;
-        return [...state, action.item]
-      default:
-        return state;
+      });
+      dispatch(_updateCart(updatedCart));
     }
   }
+};
+
+export const checkout = (userId) => {
+  return async (dispatch) => {
+    const token = window.localStorage.getItem("token")
+    const { data:completedCart } = await axios.put(`/api/cart/${userId}/checkout`, {
+      headers: {
+        authorization: token
+      }
+    })
+    dispatch(_checkout(completedCart))
+  }
+}
+
+export default (state = [], action) => {
+  switch (action.type) {
+    case UPDATE_CART:
+      window.localStorage.setItem("cart", JSON.stringify(action.updatedCart))
+      console.log("CART IS UPDATED")
+      return action.updatedCart
+    case CHECKOUT:
+      return action.completedCart
+    default:
+      return state;
+  }
+}
