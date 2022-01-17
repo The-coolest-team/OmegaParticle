@@ -9,75 +9,133 @@ const Cart = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log("I'm running ");
-    console.log(props);
-    if (props.isLoggedIn) {
-      console.log("Inside of the 2nd useEffect");
-      props.updateCart(props.userId);
-    }
+    props.isLoggedIn && props.updateCart(props.userId);
   });
 
   let history = useHistory();
 
-  const localCart = JSON.parse(window.localStorage.getItem("cart"));
+  let localCart = JSON.parse(window.localStorage.getItem("cart"));
 
   let handleSubmit = () => {
-    if (Array.isArray(localCart) && props.isLoggedIn) {
-      props.checkout(props.userId);
-      history.push("/checkout");
-    } else if (Array.isArray(localCart)) {
-      history.push("/checkout");
-    } else {
-      history.push("/home");
-    }
+    props.checkout(props.userId);
+    history.push("/checkout");
   };
+
+  const removeItemFromCart = (productId) => {
+    localCart = localCart.filter((item) => {
+      return item.productId !== productId;
+    });
+
+    localCart = JSON.stringify(localCart);
+    window.localStorage.setItem("cart", localCart);
+    history.push("/cart");
+  };
+
+  const increaseQty = (productId) => {
+    localCart = localCart.map((item) => {
+      if (item.productId === productId) {
+        item.quantity++;
+      }
+      return item;
+    });
+
+    localCart = JSON.stringify(localCart);
+    window.localStorage.setItem("cart", localCart);
+    history.push("/cart");
+  };
+
+  const decreaseQty = (productId) => {
+    localCart = localCart.map((item) => {
+      if (item.productId === productId) {
+        if (item.quantity === 1) {
+          window.alert("Cannot have less than 1 item in your cart");
+        } else {
+          item.quantity--;
+        }
+      }
+      return item;
+    });
+
+    localCart = JSON.stringify(localCart);
+    window.localStorage.setItem("cart", localCart);
+    history.push("/cart");
+  };
+
   return (
     <div>
       <h1>My Cart</h1>
-      {localCart &&
-        localCart.map(
-          ({ productId, name, description, price, quantity, imageUrl }) => {
-            return (
-              <div
-                key={productId}
-                style={{
-                  display: "flex",
-                  padding: "25px",
-                  border: "1px solid",
-                  borderRadius: "10px",
-                  marginBottom: "-1px",
-                }}
-              >
-                <img
-                  src={imageUrl}
-                  style={{
-                    maxHeight: "200px",
-                    maxWidth: "200px",
-                    marginRight: "25px",
-                  }}
-                />
-                <div>
-                  <h3>{name}</h3>
-                  <p>
-                    {description.length > 250
-                      ? description.slice(0, 250)
-                      : description}
-                    {description.length > 250 && "..."}
-                  </p>
-                  <p>Price: ${price / 100}</p>
-                  <p>Quantity: {quantity}</p>
-                </div>
-              </div>
-            );
-          }
-        )}
-      <button
-        onClick={() => {
-          handleSubmit();
-        }}
-      >
-        Checkout
-      </button>
+      {localCart.length === 0 ? (
+        <h1>Your cart is empty</h1>
+      ) : (
+        <div>
+          {localCart &&
+            localCart.map(
+              ({ productId, name, description, price, quantity, imageUrl }) => {
+                return (
+                  <div
+                    key={productId}
+                    style={{
+                      display: "flex",
+                      padding: "25px",
+                      border: "1px solid",
+                      borderRadius: "10px",
+                      marginBottom: "-1px",
+                    }}
+                  >
+                    <img
+                      src={imageUrl}
+                      style={{
+                        maxHeight: "200px",
+                        maxWidth: "200px",
+                        marginRight: "25px",
+                      }}
+                    />
+                    <div>
+                      <h3>{name}</h3>
+                      <p>
+                        {description.length > 250
+                          ? description.slice(0, 250)
+                          : description}
+                        {description.length > 250 && "..."}
+                      </p>
+                      <p>Price: ${price / 100}</p>
+                      <p>Quantity: {quantity}</p>
+                      <button
+                        onClick={() => {
+                          increaseQty(productId);
+                        }}
+                      >
+                        +
+                      </button>
+                      <button
+                        onClick={() => {
+                          decreaseQty(productId);
+                        }}
+                      >
+                        -
+                      </button>
+                      <button
+                        onClick={() => {
+                          removeItemFromCart(productId);
+                        }}
+                      >
+                        Remove Item
+                      </button>
+                    </div>
+                  </div>
+                );
+              }
+            )}
+          <button
+            onClick={() => {
+              handleSubmit();
+            }}
+          >
+            Checkout
+          </button>
+        </div>
+      )}
+
     </div>
   );
 };
