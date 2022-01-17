@@ -9,7 +9,11 @@ const Cart = (props) => {
   }, []);
 
   useEffect(() => {
-    props.isLoggedIn && props.updateCart(props.userId);
+    // props.isLoggedIn && props.updateCart(props.userId);
+    if (props.isLoggedIn) {
+      console.log("Inside of the 2nd useEffect");
+      props.updateCart(props.userId || 0);
+    }
   });
 
   let history = useHistory();
@@ -17,8 +21,14 @@ const Cart = (props) => {
   let localCart = JSON.parse(window.localStorage.getItem("cart"));
 
   let handleSubmit = () => {
-    props.checkout(props.userId);
-    history.push("/checkout");
+    if (Array.isArray(localCart) && props.isLoggedIn) {
+      props.checkout(props.userId);
+      history.push("/checkout");
+    } else if (Array.isArray(localCart)) {
+      history.push("/checkout");
+    } else {
+      history.push("/home");
+    }
   };
 
   const removeItemFromCart = (productId) => {
@@ -64,7 +74,7 @@ const Cart = (props) => {
   return (
     <div>
       <h1>My Cart</h1>
-      {localCart.length === 0 ? (
+      {!localCart || localCart.length === 0 ? (
         <h1>Your cart is empty</h1>
       ) : (
         <div>
@@ -135,7 +145,6 @@ const Cart = (props) => {
           </button>
         </div>
       )}
-
     </div>
   );
 };
