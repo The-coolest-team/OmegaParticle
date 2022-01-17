@@ -13,7 +13,7 @@ const Cart = (props) => {
     console.log(props);
     if (props.isLoggedIn) {
       console.log("Inside of the 2nd useEffect");
-      props.updateCart(props.userId || 0);
+      props.updateCart(props.userId);
     }
   });
 
