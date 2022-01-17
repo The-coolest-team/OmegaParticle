@@ -8,27 +8,26 @@ export class EditProductAdmin extends React.Component {
       name: "",
       description: "",
       stock: 0,
-      price: 0
+      price: 0,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidUpdate(prevProps) {
-    if(prevProps.product.id !== this.props.product.id) {
+    if (prevProps.product.id !== this.props.product.id) {
       this.setState({
         name: this.props.product.name,
         description: this.props.product.description,
         stock: this.props.product.stock,
-        price: this.props.product.price
-      })
+        price: this.props.product.price,
+      });
     }
-    console.log("MOAN", prevProps)
   }
 
   handleSubmit(event) {
     event.preventDefault();
-
+    this.props.updateProduct({ ...this.props.product, ...this.state });
   }
 
   handleChange(event) {

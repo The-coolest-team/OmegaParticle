@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { createdProduct } from "../store/products";
 
 export class CreateProduct extends React.Component {
   constructor(props) {
@@ -9,6 +11,7 @@ export class CreateProduct extends React.Component {
       description: "",
       stock: 0,
       price: 0,
+      imageUrl: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -16,11 +19,14 @@ export class CreateProduct extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    console.log({...this.state})
+    this.props.createProduct({...this.state});
     this.setState({
       name: "",
       description: "",
       stock: 0,
       price: 0,
+      imageUrl: ""
     });
   }
 
@@ -62,6 +68,13 @@ export class CreateProduct extends React.Component {
             value={this.state.price}
             onChange={this.handleChange}
           />
+          <br />
+          <label>Image:</label>
+          <input
+            name="imageUrl"
+            value={this.state.imageUrl}
+            onChange={this.handleChange}
+          />
           <button type="submit"> SUBMIT</button>
         </form>
       </div>
@@ -69,4 +82,10 @@ export class CreateProduct extends React.Component {
   }
 }
 
-export default CreateProduct;
+const mapDispatchToProps = (dispatch, { history }) => {
+  return {
+    createProduct: (product) => dispatch(createdProduct(product, history)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(CreateProduct);

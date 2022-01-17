@@ -10,6 +10,7 @@ import SignUp from "./components/SignUp";
 import Admin from "./components/Admin";
 import SingleProductAdmin from "./components/SingleProductAdmin";
 import Checkout from "./components/Checkout";
+import Cart from "./components/Cart";
 
 /* COMPONENT
  */
@@ -26,7 +27,7 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route exact path="/home" component={Home} />
-            <Route path="/cart" component={GuestCart} />
+            <Route path="/cart" component={Cart} />
             {/* Added this*/}
             {isAdmin && <Route exact path="/admin" component={Admin} />}
             {isAdmin && (
