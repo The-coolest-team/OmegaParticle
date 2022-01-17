@@ -4,66 +4,103 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 const Cart = (props) => {
+  useEffect(() => {
+    !props.isLoggedIn && props.loadInitialData();
+  }, []);
 
   useEffect(() => {
-    !props.isLoggedIn && props.loadInitialData()
-  }, [])
+    console.log("I'm running ");
+    console.log(props);
+    if (props.isLoggedIn) {
+      console.log("Inside of the 2nd useEffect");
+      props.updateCart(props.userId || 0);
+    }
+  });
 
-  useEffect(() => {
-    props.isLoggedIn && props.updateCart(props.userId)
-  })
+  let history = useHistory();
 
-  let history = useHistory()
-
-  const localCart = JSON.parse(window.localStorage.getItem("cart"))
+  const localCart = JSON.parse(window.localStorage.getItem("cart"));
 
   let handleSubmit = () => {
-    props.checkout(props.userId)
-    history.push("/checkout")
-  }
+    if (Array.isArray(localCart) && props.isLoggedIn) {
+      props.checkout(props.userId);
+      history.push("/checkout");
+    } else if (Array.isArray(localCart)) {
+      history.push("/checkout");
+    } else {
+      history.push("/home");
+    }
+  };
   return (
     <div>
       <h1>My Cart</h1>
-      { localCart &&
-        localCart.map(({productId, name, description, price, quantity, imageUrl}) => {
-          return (
-            <div key={productId} style={{display:"flex", padding:"25px", border:"1px solid", borderRadius:"10px", marginBottom:"-1px"}}>
-              <img src={imageUrl} style={{maxHeight:"200px", maxWidth:"200px", marginRight:"25px"}} />
-              <div>
-              <h3>{name}</h3>
-              <p>{description.length > 250 ? description.slice(0,250) : description}{description.length > 250 && "..."}</p>
-              <p>Price: ${price/100}</p>
-              <p>Quantity: {quantity}</p>
+      {localCart &&
+        localCart.map(
+          ({ productId, name, description, price, quantity, imageUrl }) => {
+            return (
+              <div
+                key={productId}
+                style={{
+                  display: "flex",
+                  padding: "25px",
+                  border: "1px solid",
+                  borderRadius: "10px",
+                  marginBottom: "-1px",
+                }}
+              >
+                <img
+                  src={imageUrl}
+                  style={{
+                    maxHeight: "200px",
+                    maxWidth: "200px",
+                    marginRight: "25px",
+                  }}
+                />
+                <div>
+                  <h3>{name}</h3>
+                  <p>
+                    {description.length > 250
+                      ? description.slice(0, 250)
+                      : description}
+                    {description.length > 250 && "..."}
+                  </p>
+                  <p>Price: ${price / 100}</p>
+                  <p>Quantity: {quantity}</p>
+                </div>
               </div>
-            </div>
-          )
-        })
-      }
-      <button onClick={() => {handleSubmit()}}>Checkout</button>
-  </div>
-  )
+            );
+          }
+        )}
+      <button
+        onClick={() => {
+          handleSubmit();
+        }}
+      >
+        Checkout
+      </button>
+    </div>
+  );
 };
 
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,
-    userId: state.auth.id
+    userId: state.auth.id,
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
-      dispatch(me())
+      dispatch(me());
     },
     updateCart(userId) {
-      dispatch(updateCart(userId))
+      dispatch(updateCart(userId));
     },
     checkout(userId) {
-      dispatch(checkout(userId))
-    }
+      dispatch(checkout(userId));
+    },
   };
 };
 
 export default connect(mapState, mapDispatch)(Cart);
-
