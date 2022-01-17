@@ -10,6 +10,7 @@ import Admin from "./components/Admin";
 import SingleProductAdmin from "./components/SingleProductAdmin";
 import Checkout from "./components/Checkout";
 import Cart from "./components/Cart";
+import AddedToCartPage from "./components/AddedToCartPage";
 
 /* COMPONENT
  */
@@ -27,7 +28,6 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/home" component={Home} />
             <Route path="/cart" component={Cart} />
-            {/* Added this*/}
             {isAdmin && <Route exact path="/admin" component={Admin} />}
             {isAdmin && (
               <Route
@@ -38,18 +38,19 @@ class Routes extends Component {
             )}
             <Route exact path="/home/:productId" component={SingleProduct} />
             <Route exact path="/checkout" component={Checkout} />
+            <Route exact path="/added" component={AddedToCartPage} />
             <Redirect to="/home" />
           </Switch>
         ) : (
           <Switch>
-            <Route path="/" exact component={Login} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={SignUp} />
+            <Route exact path="/" exact component={Home} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={SignUp} />
             <Route exact path="/home" component={Home} />
-            <Route path="/cart" component={Cart} />
-            {/* Added this */}
+            <Route exact path="/cart" component={Cart} />
             <Route exact path="/home/:productId" component={SingleProduct} />
             <Route exact path="/checkout" component={Checkout} />
+            <Route exact path="/added" component={AddedToCartPage} />
             <Redirect to="/home" />
           </Switch>
         )}
