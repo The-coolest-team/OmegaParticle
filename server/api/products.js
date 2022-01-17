@@ -29,8 +29,7 @@ router.get("/:productId", async (req, res, next) => {
 
 router.post("/", requireToken, isAdmin, async (req, res, next) => {
   try {
-    const {name, description, price, stock, imageUrl} = req.body
-    res.status(201).send(await Product.create(name, description, price, stock, imageUrl))
+    res.status(201).send(await Product.create(req.body))
   } catch (err) {
     next(err)
   }
