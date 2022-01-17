@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {connect} from "react-redux"
+import { connect } from "react-redux";
 import { fetchSingleProduct } from "../store/singleProduct";
-import {EditProductAdmin} from "./EditProductAdmin"
+import { EditProductAdmin } from "./EditProductAdmin";
+import { deletedProduct, updatedProduct } from "../store/products";
 
 function SingleProductAdmin(props) {
   useEffect(() => {
@@ -12,7 +13,16 @@ function SingleProductAdmin(props) {
     <div>
       <EditProductAdmin {...props} />
       <div>
-        <h1><button>DELETE</button></h1>
+        <h1>
+          <button
+            type="submit"
+            onClick={() => {
+              props.deleteProduct(props.product.id);
+            }}
+          >
+            DELETE
+          </button>
+        </h1>
       </div>
       <img src={props.product.imageUrl}></img>
       <p>{props.product.name}</p>
@@ -28,11 +38,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, { history }) => {
   return {
     fetchSingleProduct: (id) => {
       dispatch(fetchSingleProduct(id));
     },
+    deleteProduct: (product) => dispatch(deletedProduct(product, history)),
+    updateProduct: (product) => dispatch(updatedProduct(product, history)),
   };
 };
 
@@ -41,4 +53,3 @@ const ConnectedSingleProductAdmin = connect(
   mapDispatchToProps
 )(SingleProductAdmin);
 export default ConnectedSingleProductAdmin;
-

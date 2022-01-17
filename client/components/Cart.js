@@ -135,6 +135,7 @@ const Cart = (props) => {
           </button>
         </div>
       )}
+
     </div>
   );
 };
