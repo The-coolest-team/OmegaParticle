@@ -17,50 +17,41 @@ import AddedToCartPage from "./components/AddedToCartPage";
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
-    console.log("inital data loaded")
+    console.log("inital data loaded");
   }
 
   componentDidUpdate(prevProps) {
     if (!prevProps.isLoggedIn && this.props.isLoggedIn) {
-      this.props.checkCart(this.props.userId)
+      this.props.checkCart(this.props.userId);
     }
   }
 
   render() {
-    const { isLoggedIn, isAdmin } = this.props;
+    const { isAdmin } = this.props;
 
     return (
       <div>
-        {isLoggedIn ? (
-          <Switch>
-            <Route exact path="/home" component={Home} />
-            <Route path="/cart" component={Cart} />
-            {isAdmin && <Route exact path="/admin" component={Admin} />}
-            {isAdmin && (
-              <Route
-                exact
-                path="/admin/:productId"
-                component={SingleProductAdmin}
-              />
-            )}
-            <Route exact path="/home/:productId" component={SingleProduct} />
-            <Route exact path="/checkout" component={Checkout} />
-            <Route exact path="/added" component={AddedToCartPage} />
-            <Redirect to="/home" />
-          </Switch>
-        ) : (
-          <Switch>
-            <Route exact path="/" exact component={Home} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/signup" component={SignUp} />
-            <Route exact path="/home" component={Home} />
-            <Route exact path="/cart" component={Cart} />
-            <Route exact path="/home/:productId" component={SingleProduct} />
-            <Route exact path="/checkout" component={Checkout} />
-            <Route exact path="/added" component={AddedToCartPage} />
-            <Redirect to="/home" />
-          </Switch>
-        )}
+        <Switch>
+          <Route exact path="/" exact component={Home} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/home" component={Home} />
+          <Route exact path="/cart" component={Cart} />
+          <Route exact path="/home/:productId" component={SingleProduct} />
+          <Route exact path="/checkout" component={Checkout} />
+          <Route exact path="/added" component={AddedToCartPage} />
+
+          {isAdmin && <Route exact path="/admin" component={Admin} />}
+          {isAdmin && (
+            <Route
+              exact
+              path="/admin/:productId"
+              component={SingleProductAdmin}
+            />
+          )}
+
+          <Redirect to="/home" />
+        </Switch>
       </div>
     );
   }
@@ -75,7 +66,7 @@ const mapState = (state) => {
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
     isAdmin: !!state.auth.isAdmin,
-    userId: state.auth.id
+    userId: state.auth.id,
   };
 };
 
@@ -83,9 +74,10 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
       dispatch(me());
-    }, checkCart(userId) {
-      dispatch(checkCart(userId))
-    }
+    },
+    checkCart(userId) {
+      dispatch(checkCart(userId));
+    },
   };
 };
 

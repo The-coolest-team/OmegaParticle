@@ -57,6 +57,7 @@ export const createdProduct = (product, history) => {
       });
       dispatch(createProduct(newProduct));
       history.push("/admin");
+      window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
     } catch (err) {
       console.log(err);
     }
@@ -73,7 +74,9 @@ export const deletedProduct = (productId, history) => {
         { headers }
       );
       dispatch(deleteProduct(deleted));
+      history.push("/home");
       history.push("/admin");
+      window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
     } catch (err) {
       console.log(err);
     }
@@ -91,7 +94,8 @@ export const updatedProduct = (product, history) => {
         { headers }
       );
       dispatch(updateProduct(updated));
-      history.push("/admin");
+      history.push("/home");
+      history.push(`/admin/${product.id}`);
     } catch (err) {
       console.log(err);
     }
