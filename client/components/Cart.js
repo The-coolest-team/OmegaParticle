@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 const Cart = (props) => {
+  let localCart = JSON.parse(window.localStorage.getItem("cart"));
+
   useEffect(() => {
     !props.isLoggedIn && props.loadInitialData();
   }, []);
@@ -12,13 +14,12 @@ const Cart = (props) => {
     // props.isLoggedIn && props.updateCart(props.userId);
     if (props.isLoggedIn) {
       console.log("Inside of the 2nd useEffect");
-      props.updateCart(props.userId || 0);
+      props.updateCart(props.userId);
     }
+    localCart = JSON.parse(window.localStorage.getItem("cart"));
   });
 
   let history = useHistory();
-
-  let localCart = JSON.parse(window.localStorage.getItem("cart"));
 
   let handleSubmit = () => {
     if (Array.isArray(localCart) && props.isLoggedIn) {
