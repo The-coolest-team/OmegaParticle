@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login } from "./components/AuthForm";
 import Home from "./components/Home";
-import { me } from "./store";
+import { me, checkCart } from "./store";
 import SingleProduct from "./components/SingleProduct";
 import SignUp from "./components/SignUp";
 import Admin from "./components/Admin";
@@ -17,6 +17,13 @@ import AddedToCartPage from "./components/AddedToCartPage";
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
+    console.log("inital data loaded")
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.isLoggedIn && this.props.isLoggedIn) {
+      this.props.checkCart(this.props.userId)
+    }
   }
 
   render() {
@@ -68,6 +75,7 @@ const mapState = (state) => {
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
     isAdmin: !!state.auth.isAdmin,
+    userId: state.auth.id
   };
 };
 
@@ -75,7 +83,9 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
       dispatch(me());
-    },
+    }, checkCart(userId) {
+      dispatch(checkCart(userId))
+    }
   };
 };
 
