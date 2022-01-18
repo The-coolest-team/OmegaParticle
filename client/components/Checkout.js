@@ -1,30 +1,40 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch, connect } from "react-redux";
-import { getProducts } from "../store/products";
+import { getCart } from "../store";
 import { Link } from "react-router-dom";
 
 //On checkout, it should send the order to redux and backend to update the server.
 //More work to be done here
 
-const Checkout = (props) => {
-  if (!props.isLoggedIn) {
+const Checkout = () => {
+  let { auth, cart } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (auth.id) {
+      dispatch(getCart(auth.id));
+    }
+  }, []);
+
+  if (!auth.id) {
     return (
       <div>
         Mac, please create an account by clicking Sign up above in order to
         check out
       </div>
     );
-  } else {
-    let order = JSON.parse(window.localStorage.getItem("cart"));
+  } else if (cart.length) {
+    console.log("We are inside the else if on line 44");
     let price =
-      order.reduce((val, nextVal) => {
+      cart.reduce((val, nextVal) => {
         return (val += nextVal.price);
       }, 0) / 100;
-    console.log(order);
+    // console.log(order);
+    window.localStorage.removeItem("cart");
     return (
       <div>
         <h1>Thank you for your order of </h1>
-        {order.map((item) => {
+        {cart.map((item) => {
           return (
             <div
               key={item.productId}
@@ -52,16 +62,21 @@ const Checkout = (props) => {
         <h1>it will arrive in a billion years</h1>
       </div>
     );
+  } else {
+    return <div>Loading</div>;
   }
 };
+
+export default Checkout;
 // useEffect(()=> {
 //   !props.isLoggedIn
 // })
 
-const mapState = (state) => {
-  return {
-    isLoggedIn: !!state.auth.id,
-  };
-};
+// const mapState = (state) => {
+//   return {
+//     isLoggedIn: !!state.auth.id,
+//     userId: state.auth.id,
+//   };
+// };
 
-export default connect(mapState, null)(Checkout);
+// export default connect(mapState, null)(Checkout);

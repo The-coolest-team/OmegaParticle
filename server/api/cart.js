@@ -42,6 +42,7 @@ router.post("/:userId", requireToken, isUser, async (req, res, next) => {
       let cartItem = await CartItem.findOrCreate({
         where: {
           productId: product.productId,
+          cartId: dbCart.id,
         },
         defaults: {
           priceAtPurchase: currentProduct.price,
@@ -68,6 +69,50 @@ router.post("/:userId", requireToken, isUser, async (req, res, next) => {
 });
 
 //CHECKOUT
+// Get Cart Items
+router.get(
+  "/:userId/checkout",
+  requireToken,
+  isUser,
+  async (req, res, next) => {
+    try {
+      console.log("checkout is running in user cart");
+      let data = [];
+      let dbCart = await Cart.findAll({
+        where: {
+          userId: req.params.userId,
+          orderComplete: true,
+        },
+        include: CartItem,
+      });
+      console.log(dbCart);
+      dbCart.sort((a, b) => {
+        return b.id - a.id;
+      });
+
+      for (const cartitem of dbCart[0].cartitems) {
+        let product = await Product.findByPk(cartitem.productId);
+        // console.log("product.stock:", product.quantity);
+        // console.log("cartitem.quantity:", cartitem.quantity);
+        // product.stock -= cartitem.quantity;
+        // await product.save();
+        const { productId, priceAtPurchase, quantity } = cartitem;
+        const { name, imageUrl } = product;
+        data.push({
+          productId,
+          price: priceAtPurchase,
+          quantity,
+          name,
+          imageUrl,
+        });
+      }
+      res.send(data);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
 router.put(
   "/:userId/checkout",
   requireToken,
