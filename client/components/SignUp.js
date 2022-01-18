@@ -31,7 +31,7 @@ class Signup extends React.Component {
       email: this.state.email,
       password: this.state.password,
       firstName: this.state.firstName,
-      lastName: this.state.lastName
+      lastName: this.state.lastName,
     });
   }
 
@@ -50,7 +50,7 @@ class Signup extends React.Component {
                 value={this.state.username}
               />
             </div>
-            <br/>
+            <br />
             <div>
               <label name="email">email: </label>
               <input
@@ -60,7 +60,7 @@ class Signup extends React.Component {
                 value={this.state.email}
               />
             </div>
-            <br/>
+            <br />
             <div>
               <label name="password">password: </label>
               <input
@@ -70,7 +70,7 @@ class Signup extends React.Component {
                 value={this.state.password}
               />
             </div>
-            <br/>
+            <br />
             <div>
               <label name="firstName">first name: </label>
               <input
@@ -80,7 +80,7 @@ class Signup extends React.Component {
                 value={this.state.firstName}
               />
             </div>
-            <br/>
+            <br />
             <div>
               <label name="lastName">last name: </label>
               <input
@@ -98,8 +98,8 @@ class Signup extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  createUser: (user) => dispatch(newUser(user)),
+const mapDispatchToProps = (dispatch, { history }) => ({
+  createUser: (user) => dispatch(newUser(user, history)),
 });
 
 export default connect(null, mapDispatchToProps)(Signup);

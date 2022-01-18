@@ -9,10 +9,12 @@ const createUser = (user) => {
   };
 };
 
-export const newUser = (user) => async (dispatch) => {
+export const newUser = (user, history) => async (dispatch) => {
   try {
     const { data } = await axios.post("/auth/signup", user);
     dispatch(createUser(data));
+    window.alert("Account created! Please login")
+    history.push("/login")
   } catch (err) {
     console.log(err);
   }
