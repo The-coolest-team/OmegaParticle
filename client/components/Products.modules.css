@@ -1,0 +1,12 @@
+.products_container {
+  display: grid;
+}
+
+.products_items {
+  grid-template-columns: 20px 20px 20px 20px;
+}
+
+.products_img {
+  width: 100px;
+  height: 100px;
+}
