@@ -10,7 +10,7 @@ module.exports = router;
 router.post("/:userId", requireToken, isUser, async (req, res, next) => {
   try {
     let newCart, newItem;
-    let localCart = req.body.localCart;
+    let localCart = req.body;
     let data = [];
 
     let dbCart = await Cart.findOrCreate({
@@ -24,6 +24,7 @@ router.post("/:userId", requireToken, isUser, async (req, res, next) => {
     await dbCart.save();
 
     // IF TOO MUCH QUANTITY, SEND 400 AND EXIT POST REQUEST
+    console.log("local cart:", localCart)
     localCart.forEach(async (product) => {
       try {
         let currentProduct = await Product.findByPk(product.productId);
@@ -113,6 +114,47 @@ router.get(
   }
 );
 
+// /api/cart/:userId/cart
+router.get(
+  "/:userId/cart",
+  requireToken,
+  isUser,
+  async (req, res, next) => {
+    try {
+      let data = [];
+      let dbCart = await Cart.findOne({
+        where: {
+          userId: req.params.userId,
+          orderComplete: false,
+        },
+        include: CartItem,
+      });
+      if (!dbCart) return res.send(null);
+
+      for (const cartitem of dbCart.cartitems) {
+        let product = await Product.findByPk(cartitem.productId);
+        // console.log("product.stock:", product.quantity);
+        // console.log("cartitem.quantity:", cartitem.quantity);
+        // product.stock -= cartitem.quantity;
+        // await product.save();
+        const { productId, priceAtPurchase, quantity } = cartitem;
+        const { name, description, imageUrl } = product;
+        data.push({
+          productId,
+          name,
+          description,
+          price: priceAtPurchase,
+          quantity,
+          imageUrl,
+        });
+      }
+      res.send(data);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
 router.put(
   "/:userId/checkout",
   requireToken,
@@ -129,7 +171,7 @@ router.put(
       });
       if (!dbCart) return res.status(400).send({ error: "no cart" });
       for (const cartitem of dbCart.cartitems) {
-        let product = await Product.findByPk(cartitem.id);
+        let product = await Product.findByPk(cartitem.productId);
         if (cartitem.quantity > product.stock)
           return res.status(400).send({ error: "stock" });
       }
