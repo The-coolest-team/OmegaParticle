@@ -33,19 +33,21 @@ router.post("/:userId", async (req, res, next) => {
         next(err);
       }
     });
-    let localCartArray = localCart.map(obj => obj.productId)
-    let productArray = await Product.findAll({attributes: ['id']})
-    let productList = productArray.filter(product => !localCartArray.includes(product.id))
+    let localCartArray = localCart.map((obj) => obj.productId);
+    let productArray = await Product.findAll({ attributes: ["id"] });
+    let productList = productArray.filter(
+      (product) => !localCartArray.includes(product.id)
+    );
 
     if (productList.length) {
       for (let i = 0; i < productList.length; i++) {
         let currentCartItem = await CartItem.findOne({
           where: {
             cartId: dbCart.id,
-            productId: productList[i].id
+            productId: productList[i].id,
           },
-        })
-        if (currentCartItem) await currentCartItem.destroy()
+        });
+        if (currentCartItem) await currentCartItem.destroy();
       }
     }
 
@@ -100,20 +102,22 @@ router.get(
       dbCart.sort((a, b) => {
         return b.id - a.id;
       });
-      if (!dbCart.length) res.send(null)
-      for (const cartitem of dbCart[0].cartitems) {
-        let product = await Product.findByPk(cartitem.productId);
-        const { productId, priceAtPurchase, quantity } = cartitem;
-        const { name, imageUrl } = product;
-        data.push({
-          productId,
-          price: priceAtPurchase,
-          quantity,
-          name,
-          imageUrl,
-        });
+      if (!dbCart.length) res.send(null);
+      else {
+        for (const cartitem of dbCart[0].cartitems) {
+          let product = await Product.findByPk(cartitem.productId);
+          const { productId, priceAtPurchase, quantity } = cartitem;
+          const { name, imageUrl } = product;
+          data.push({
+            productId,
+            price: priceAtPurchase,
+            quantity,
+            name,
+            imageUrl,
+          });
+        }
+        res.send(data);
       }
-      res.send(data);
     } catch (err) {
       next(err);
     }
@@ -121,42 +125,37 @@ router.get(
 );
 
 // /api/cart/:userId/cart
-router.get(
-  "/:userId/cart",
-  requireToken,
-  isUser,
-  async (req, res, next) => {
-    try {
-      let data = [];
-      let dbCart = await Cart.findOne({
-        where: {
-          userId: req.params.userId,
-          orderComplete: false,
-        },
-        include: CartItem,
+router.get("/:userId/cart", requireToken, isUser, async (req, res, next) => {
+  try {
+    let data = [];
+    let dbCart = await Cart.findOne({
+      where: {
+        userId: req.params.userId,
+        orderComplete: false,
+      },
+      include: CartItem,
+    });
+    if (!dbCart) return res.send(null);
+
+    for (const cartitem of dbCart.cartitems) {
+      let product = await Product.findByPk(cartitem.productId);
+
+      const { productId, priceAtPurchase, quantity } = cartitem;
+      const { name, description, imageUrl } = product;
+      data.push({
+        productId,
+        name,
+        description,
+        price: priceAtPurchase,
+        quantity,
+        imageUrl,
       });
-      if (!dbCart) return res.send(null);
-
-      for (const cartitem of dbCart.cartitems) {
-        let product = await Product.findByPk(cartitem.productId);
-
-        const { productId, priceAtPurchase, quantity } = cartitem;
-        const { name, description, imageUrl } = product;
-        data.push({
-          productId,
-          name,
-          description,
-          price: priceAtPurchase,
-          quantity,
-          imageUrl,
-        });
-      }
-      res.send(data);
-    } catch (err) {
-      next(err);
     }
+    res.send(data);
+  } catch (err) {
+    next(err);
   }
-);
+});
 
 router.put(
   "/:userId/checkout",
