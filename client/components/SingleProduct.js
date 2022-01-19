@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchSingleProduct } from "../store/singleProduct";
+// import { updateCart } from "../store"
 import { Link } from "react-router-dom";
 
 const SingleProduct = (props) => {
@@ -20,6 +21,7 @@ const SingleProduct = (props) => {
         <button
           onClick={() => {
             addToCart(id, name, description, price, imageUrl);
+            // props.updateCart(userId)
           }}
         >
           Add to cart
@@ -56,6 +58,7 @@ const addToCart = (productId, name, description, price, imageUrl) => {
 const mapStateToProps = (state) => {
   return {
     product: state.singleProductReducer,
+    // userId: state.auth.id
   };
 };
 
@@ -64,6 +67,9 @@ const mapDispatchToProps = (dispatch) => {
     fetchSingleProduct: (id) => {
       dispatch(fetchSingleProduct(id));
     },
+    // updateCart: (userId) => {
+      // dispatch(updateCart(userId))
+    // }
   };
 };
 
