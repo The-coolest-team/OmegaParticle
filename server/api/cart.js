@@ -7,7 +7,7 @@ module.exports = router;
 // console.log(Object.keys(sequelizeObject.__proto__));
 
 // /api/cart/:userId | VIEW/ADD/UPDATE CART ITEMS
-router.post("/:userId", requireToken, isUser, async (req, res, next) => {
+router.post("/:userId", async (req, res, next) => {
   try {
     let newCart, newItem;
     let localCart = req.body;
@@ -24,7 +24,6 @@ router.post("/:userId", requireToken, isUser, async (req, res, next) => {
     await dbCart.save();
 
     // IF TOO MUCH QUANTITY, SEND 400 AND EXIT POST REQUEST
-    console.log("local cart:", localCart)
     localCart.forEach(async (product) => {
       try {
         let currentProduct = await Product.findByPk(product.productId);
@@ -34,6 +33,21 @@ router.post("/:userId", requireToken, isUser, async (req, res, next) => {
         next(err);
       }
     });
+    let localCartArray = localCart.map(obj => obj.productId)
+    let productArray = await Product.findAll({attributes: ['id']})
+    let productList = productArray.filter(product => !localCartArray.includes(product.id))
+
+    if (productList.length) {
+      for (let i = 0; i < productList.length; i++) {
+        let currentCartItem = await CartItem.findOne({
+          where: {
+            cartId: dbCart.id,
+            productId: productList[i].id
+          },
+        })
+        if (currentCartItem) await currentCartItem.destroy()
+      }
+    }
 
     // UPDATE INFO FOR EACH CART ITEM
     for (const product of localCart) {
@@ -58,10 +72,8 @@ router.post("/:userId", requireToken, isUser, async (req, res, next) => {
       // ============== UPDATING CART/STORE ============================
       const { productId, quantity } = updatedCartItem;
       const { name, description, price, imageUrl } = currentProduct;
-      console.log("data.push reached for ID:", productId);
       data.push({ productId, name, description, price, quantity, imageUrl });
     }
-    console.log("DATA:", data);
     if (newCart || newItem) return res.status(201).json(data);
     return res.status(200).json(data);
   } catch (error) {
@@ -77,7 +89,6 @@ router.get(
   isUser,
   async (req, res, next) => {
     try {
-      console.log("checkout is running in user cart");
       let data = [];
       let dbCart = await Cart.findAll({
         where: {
@@ -86,17 +97,12 @@ router.get(
         },
         include: CartItem,
       });
-      console.log(dbCart);
       dbCart.sort((a, b) => {
         return b.id - a.id;
       });
-
+      if (!dbCart.length) res.send(null)
       for (const cartitem of dbCart[0].cartitems) {
         let product = await Product.findByPk(cartitem.productId);
-        // console.log("product.stock:", product.quantity);
-        // console.log("cartitem.quantity:", cartitem.quantity);
-        // product.stock -= cartitem.quantity;
-        // await product.save();
         const { productId, priceAtPurchase, quantity } = cartitem;
         const { name, imageUrl } = product;
         data.push({
@@ -133,10 +139,7 @@ router.get(
 
       for (const cartitem of dbCart.cartitems) {
         let product = await Product.findByPk(cartitem.productId);
-        // console.log("product.stock:", product.quantity);
-        // console.log("cartitem.quantity:", cartitem.quantity);
-        // product.stock -= cartitem.quantity;
-        // await product.save();
+
         const { productId, priceAtPurchase, quantity } = cartitem;
         const { name, description, imageUrl } = product;
         data.push({
@@ -178,8 +181,6 @@ router.put(
 
       for (const cartitem of dbCart.cartitems) {
         let product = await Product.findByPk(cartitem.productId);
-        console.log("product.stock:", product.quantity);
-        console.log("cartitem.quantity:", cartitem.quantity);
         product.stock -= cartitem.quantity;
         await product.save();
         const { productId, quantity } = cartitem;
