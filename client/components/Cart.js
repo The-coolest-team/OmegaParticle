@@ -140,6 +140,26 @@ const Cart = (props) => {
           <button
             onClick={() => {
               handleSubmit();
+              // ADDED BY JOHN
+              fetch("/create-checkout-session", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json", // We're sending JSON information
+                },
+                body: JSON.stringify(localCart), // This is the JSON we are sending
+              })
+                .then((res) => {
+                  if (res.ok) return res.json(); // If successful we want to convert to JSON
+                  return res.json().then((json) => Promise.reject(json)); // Taking our JSON response and making sure it actually fails, b/c fetch doesnt fail on its own
+                })
+                .then(({ url }) => {
+                  // This is our JSON response, which will return to us a URL
+                  // console.log(url);
+                  window.location = url; // Sends user to the URL
+                })
+                .catch((e) => {
+                  console.error(e.error);
+                });
             }}
           >
             Checkout
