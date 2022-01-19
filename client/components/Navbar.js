@@ -6,23 +6,31 @@ import styles from "./Navbar.modules.css";
 
 const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
   <div>
-    <div className={styles.Navbar_container}>Petazon</div>
+    <div className={styles.Navbar_container}></div>
     <nav>
       {isLoggedIn ? (
         <div className={styles.Navbar_container}>
           {/* The navbar will show these links after you log in */}
-          <Link to="/home"></Link>
-          <Link to="/cart">Cart</Link>
+          <Link to="/home">
+            <img src={"https://i.imgur.com/8r7XpEd.png"} />
+          </Link>
+          <Link to="/cart">
+            <img src={"https://i.imgur.com/W6dORqn.png"} />
+          </Link>
           {isAdmin && <Link to="/admin">Admin</Link>}
           <a href="#" onClick={handleClick}>
             Logout
           </a>
         </div>
       ) : (
-        <div>
+        <div className={styles.Navbar_container}>
           {/* The navbar will show these links before you log in */}
-          <Link to="/home">Home</Link>
-          <Link to="/login">Login</Link>
+          <Link to="/home">
+            <img src={"https://i.imgur.com/8r7XpEd.png"} />
+          </Link>
+          <Link to="/login">
+            <img src={"https://i.imgur.com/KBmLLrT.png"} />
+          </Link>
           <Link to="/signup">Sign Up</Link>
           <Link to="/cart">Cart</Link>
         </div>
