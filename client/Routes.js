@@ -11,6 +11,7 @@ import SingleProductAdmin from "./components/SingleProductAdmin";
 import Checkout from "./components/Checkout";
 import Cart from "./components/Cart";
 import AddedToCartPage from "./components/AddedToCartPage";
+import IsNotSignedUp from "./components/IsNotSignedUp";
 
 /* COMPONENT
  */
@@ -27,7 +28,7 @@ class Routes extends Component {
   }
 
   render() {
-    const { isAdmin } = this.props;
+    const { isAdmin, isLoggedIn } = this.props;
 
     return (
       <div>
@@ -40,7 +41,9 @@ class Routes extends Component {
           <Route exact path="/home/:productId" component={SingleProduct} />
           <Route exact path="/checkout" component={Checkout} />
           <Route exact path="/added" component={AddedToCartPage} />
-
+          {!isLoggedIn && (
+            <Route exact path="/not-signed-up" component={IsNotSignedUp} />
+          )}
           {isAdmin && <Route exact path="/admin" component={Admin} />}
           {isAdmin && (
             <Route
