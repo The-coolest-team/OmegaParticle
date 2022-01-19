@@ -10,7 +10,6 @@ export const Home = (props) => {
 
   return (
     <div>
-      <h3>Welcome to the Home Page</h3>
       <Products />
     </div>
   );

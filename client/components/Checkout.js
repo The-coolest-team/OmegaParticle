@@ -27,7 +27,7 @@ const Checkout = () => {
     console.log("We are inside the else if on line 44");
     let price =
       cart.reduce((val, nextVal) => {
-        return (val += nextVal.price);
+        return (val += nextVal.price * nextVal.quantity);
       }, 0) / 100;
     // console.log(order);
     window.localStorage.removeItem("cart");

@@ -1,12 +1,26 @@
-.products_container {
+.products_parent {
+  height: auto;
   display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(5, 1fr);
+  border: 2px solid red;
 }
 
-.products_items {
-  grid-template-columns: 20px 20px 20px 20px;
+.products_visual {
+  height: 150px;
+  max-width: 200px;
 }
 
-.products_img {
-  width: 100px;
-  height: 100px;
+.products_card {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  justify-content: space-evenly;
+  border: 2px solid green;
+}
+
+.products_button {
+  background-color: #2a1e5c;
+  color: white;
+  font: arial;
 }

@@ -2,17 +2,18 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
+import styles from "./Navbar.modules.css";
 
 const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
   <div>
-    <h1>FS-App-Template</h1>
+    <div className={styles.Navbar_container}>Petazon</div>
     <nav>
       {isLoggedIn ? (
-        <div>
+        <div className={styles.Navbar_container}>
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
+          <Link to="/home"></Link>
           <Link to="/cart">Cart</Link>
-          {isAdmin && (<Link to="/admin">Admin</Link>)}
+          {isAdmin && <Link to="/admin">Admin</Link>}
           <a href="#" onClick={handleClick}>
             Logout
           </a>
@@ -37,7 +38,7 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,
-    isAdmin: !!state.auth.isAdmin
+    isAdmin: !!state.auth.isAdmin,
   };
 };
 
