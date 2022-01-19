@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getProducts } from "../store/products";
+import { getProducts } from "../store"
 import { Link } from "react-router-dom";
 import styles from "./Products.modules.css";
 
@@ -36,3 +36,28 @@ const Products = () => {
 };
 
 export default Products;
+
+// const addToCart = (productId, name, description, price, imageUrl) => {
+//   let localCartArr = [];
+//   const localCart = window.localStorage.getItem("cart");
+//   if (localCart) localCartArr = JSON.parse(localCart);
+
+//   let newItem = true;
+//   localCartArr.forEach((cartitem) => {
+//     if (cartitem.productId === productId) {
+//       cartitem.quantity++;
+//       newItem = false;
+//     }
+//   });
+//   if (newItem)
+//     localCartArr.push({
+//       productId,
+//       name,
+//       description,
+//       price,
+//       quantity: 1,
+//       imageUrl,
+//     });
+
+//   window.localStorage.setItem("cart", JSON.stringify(localCartArr));
+// };
