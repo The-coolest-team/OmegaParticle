@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { fetchSingleProduct } from "../store/singleProduct";
 // import { updateCart } from "../store"
 import { Link } from "react-router-dom";
+import styles from "./SingleProduct.modules.css";
 
 const SingleProduct = (props) => {
   useEffect(() => {
@@ -12,21 +13,29 @@ const SingleProduct = (props) => {
   const { id, name, description, price, imageUrl } = props.product;
 
   return (
-    <div>
-      <img src={imageUrl}></img>
-      <p>{name}</p>
-      <p>${price / 100}</p>
-      <p>{description}</p>
-      <Link to={"/added"}>
-        <button
-          onClick={() => {
-            addToCart(id, name, description, price, imageUrl);
-            // props.updateCart(userId)
-          }}
-        >
-          Add to cart
-        </button>
-      </Link>
+    <div className={styles.single_product_container}>
+      <div className={styles.img_and_button_container}>
+        <img className={styles.single_product_img} src={imageUrl}></img>
+        <p>${price / 100}</p>
+
+        <Link to={"/added"}>
+          <button
+            className={styles.add_to_cart_button}
+            onClick={() => {
+              addToCart(id, name, description, price, imageUrl);
+              // props.updateCart(userId)
+            }}
+          >
+            Add to cart
+          </button>
+        </Link>
+      </div>
+      <div className={styles.text_container}>
+        <div className={styles.single_product_name}>{name}</div>
+        <p>Description:</p>
+        <p className={styles.single_product_description}>{description}</p>
+      </div>
+      <div className={styles.color_bar}></div>
     </div>
   );
 };
@@ -68,7 +77,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(fetchSingleProduct(id));
     },
     // updateCart: (userId) => {
-      // dispatch(updateCart(userId))
+    // dispatch(updateCart(userId))
     // }
   };
 };
