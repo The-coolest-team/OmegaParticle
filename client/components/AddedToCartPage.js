@@ -6,10 +6,10 @@ const AddedToCartPage = (props) => {
     <div>
       <h1>You have successfully added to your cart!</h1>
       <Link to={"/cart"}>
-        <button>Proceed to cart</button>
+        <button className="added_to_cart_button">Proceed to cart</button>
       </Link>
       <Link to={"/home"}>
-        <button>Continue shopping</button>
+        <button className="added_to_cart_button">Continue shopping</button>
       </Link>
     </div>
   );
