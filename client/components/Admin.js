@@ -4,7 +4,7 @@ import AllProductsAdmin from "./AllProductsAdmin";
 import { CreateProduct } from "./CreateProduct";
 import { createdProduct } from "../store/products";
 import { fetchUsers } from "../store/users";
-import AdminUser from "./AdminUser"
+import AdminUser from "./AdminUser";
 
 class Admin extends React.Component {
   constructor() {
@@ -26,6 +26,7 @@ class Admin extends React.Component {
         </div>
         <div>===================================================</div>
         <div></div>
+        <h1 className="header">All Products</h1>
         <AllProductsAdmin />
       </div>
     );

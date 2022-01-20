@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { authenticate } from "../store";
+import styles from "./LogIn.modules.css";
 
 /**
  * COMPONENT
@@ -9,22 +10,24 @@ const AuthForm = (props) => {
   const { name, displayName, handleSubmit, error } = props;
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="username">
-            <small>Username</small>
-          </label>
-          <input name="username" type="text" />
+    <div className={styles.sign_up_form}>
+      <form className={styles.form} onSubmit={handleSubmit} name={name}>
+        <div className={styles.parent}>
+          <label htmlFor="username">Username</label>
+          <input name="username" type="text" className={styles.input_field} />
         </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
+        <div className={styles.parent}>
+          <label htmlFor="password">Password</label>
+          <input
+            name="password"
+            type="password"
+            className={styles.input_field}
+          />
         </div>
-        <div>
-          <button type="submit">{displayName}</button>
+        <div className={styles.align_right}>
+          <button className={styles.sign_up_button} type="submit">
+            {displayName}
+          </button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
