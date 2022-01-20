@@ -1,0 +1,11 @@
+.all_products_admin_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  border: 2px solid;
+}
+
+.image {
+  height: 300px;
+  width: 300px;
+}

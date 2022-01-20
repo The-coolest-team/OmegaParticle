@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { me, updateCart, checkout } from "../store";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import styles from "./Cart.modules.css";
 
 const Cart = (props) => {
   let localCart = JSON.parse(window.localStorage.getItem("cart"));
@@ -112,6 +113,7 @@ const Cart = (props) => {
                       <p>Price: ${price / 100}</p>
                       <p>Quantity: {quantity}</p>
                       <button
+                        className={styles.button}
                         onClick={() => {
                           increaseQty(productId);
                         }}
@@ -119,6 +121,7 @@ const Cart = (props) => {
                         +
                       </button>
                       <button
+                        className={styles.button}
                         onClick={() => {
                           decreaseQty(productId);
                         }}
@@ -126,6 +129,7 @@ const Cart = (props) => {
                         -
                       </button>
                       <button
+                        className={styles.button}
                         onClick={() => {
                           removeItemFromCart(productId);
                         }}
@@ -138,6 +142,7 @@ const Cart = (props) => {
               }
             )}
           <button
+            className={styles.button}
             onClick={() => {
               if (props.isLoggedIn) {
                 // ADDED BY JOHN

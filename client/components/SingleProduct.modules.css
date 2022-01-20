@@ -4,9 +4,9 @@
 
 .single_product_container {
   display: flex;
-  justify-content: space-between;
   margin-top: 50px;
   margin-left: 50px;
+  width: 75vw;
 }
 
 .single_product_img {
@@ -53,9 +53,11 @@
   border: 2px solid #2a1e5c;
 }
 
-.color_bar {
-  width: 300px;
-  height: 700px;
+.block {
+  position: absolute;
+  top: 140px;
+  width: 15vw;
   background-color: #2a1e5c;
-  margin-right: 50px;
+  bottom: 0px;
+  right: 5vw;
 }
