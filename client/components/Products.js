@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getProducts } from "../store"
+import { getProducts } from "../store";
 import { Link } from "react-router-dom";
 import styles from "./Products.modules.css";
 
@@ -27,8 +27,8 @@ const Products = () => {
                     className={styles.products_visual}
                   />
                   <div>
-                    <button className={styles.products_button}>
-                      Additional Info
+                    <button>
+                      <img src="https://i.imgur.com/HyuZPAR.png" />
                     </button>
                   </div>
                 </Link>
