@@ -3,15 +3,20 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { getProducts } from "../store/products";
 import { CreateProduct } from "./CreateProduct";
+import styles from "./AllProductsAdmin.modules.css";
 
 function AllProductsAdmin({ allProducts }) {
   return allProducts.length ? (
-    <div>
+    <div className={styles.all_products_admin_container}>
       {allProducts.map((product) => {
         return (
           <div key={product.id}>
             <Link to={`/admin/${product.id}`}>
-              <img src={product.imageUrl} style={{ width: "300px" }} />
+              <img
+                className={styles.image}
+                src={product.imageUrl}
+                style={{ width: "300px" }}
+              />
               <div>{product.name}</div>
               <div>{product.price}</div>
             </Link>

@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { newUser } from "../store/newUser";
+import styles from "./SignUp.modules.css";
 
 class Signup extends React.Component {
   constructor() {
@@ -37,13 +38,15 @@ class Signup extends React.Component {
 
   render() {
     return (
-      <div>
-        <h3>Welcome to Petazon</h3>
-        <form onSubmit={this.handleSubmit}>
+      <div className={styles.sign_up_form}>
+        <form className={styles.form} onSubmit={this.handleSubmit}>
+          <h3 className={styles.title}>Welcome to Petazon</h3>
+
           <ul>
-            <div>
-              <label name="username">username: </label>
+            <div className={styles.parent}>
+              <label name="username">Username </label>
               <input
+                className={styles.input_field}
                 name="username"
                 type="text"
                 onChange={this.handleChange}
@@ -51,19 +54,22 @@ class Signup extends React.Component {
               />
             </div>
             <br />
-            <div>
-              <label name="email">email: </label>
+            <div className={styles.parent}>
+              <label name="email">Email </label>
               <input
+                className={styles.input_field}
                 name="email"
-                type="text"
+                type="email"
                 onChange={this.handleChange}
                 value={this.state.email}
+                required
               />
             </div>
             <br />
-            <div>
-              <label name="password">password: </label>
+            <div className={styles.parent}>
+              <label name="password">Password </label>
               <input
+                className={styles.input_field}
                 name="password"
                 type="text"
                 onChange={this.handleChange}
@@ -71,9 +77,10 @@ class Signup extends React.Component {
               />
             </div>
             <br />
-            <div>
-              <label name="firstName">first name: </label>
+            <div className={styles.parent}>
+              <label name="firstName">First Name </label>
               <input
+                className={styles.input_field}
                 name="firstName"
                 type="text"
                 onChange={this.handleChange}
@@ -81,9 +88,10 @@ class Signup extends React.Component {
               />
             </div>
             <br />
-            <div>
-              <label name="lastName">last name: </label>
+            <div className={styles.parent}>
+              <label name="lastName">Last Name </label>
               <input
+                className={styles.input_field}
                 name="lastName"
                 type="text"
                 onChange={this.handleChange}
@@ -91,7 +99,11 @@ class Signup extends React.Component {
               />
             </div>
           </ul>
-          <button type="submit">submit</button>
+          <div className={styles.align_right}>
+            <button className={styles.sign_up_button} type="submit">
+              Sign Up
+            </button>
+          </div>
         </form>
       </div>
     );

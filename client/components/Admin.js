@@ -26,6 +26,7 @@ class Admin extends React.Component {
         </div>
         <div>===================================================</div>
         <div></div>
+        <h1 className="header">All Products</h1>
         <AllProductsAdmin />
       </div>
     );
