@@ -1,0 +1,40 @@
+.products_visual {
+  max-height: 200px;
+  max-width: 200px;
+  margin-right: 25px;
+}
+
+.products_card {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+
+  padding: 25px;
+  border: 1px dotted;
+  border-radius: 10px;
+  margin-bottom: -1px;
+}
+
+.products_card:hover {
+  color: #3cbbb1;
+}
+
+.block {
+  position: absolute;
+  top: 140px;
+  width: 15vw;
+  background-color: #2a1e5c;
+  bottom: 0px;
+  right: 5vw;
+}
+
+.products_button {
+  background-color: #2a1e5c;
+  color: white;
+  padding: 8px 70px;
+  margin: 10px;
+  border: none;
+  font-size: 16px;
+  border-radius: 10px;
+  text-align: center;
+}

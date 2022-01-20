@@ -19,20 +19,22 @@ const Products = () => {
         <div className={styles.products_parent}>
           {products.map((product) => {
             return (
-              <div key={product.id}>
-                <Link to={`/home/${product.id}`}>
-                  <div>{product.name}</div>
-                  <img
-                    src={product.imageUrl}
-                    className={styles.products_visual}
-                  />
-                  <div>
-                    <button>
-                      <img src="https://i.imgur.com/HyuZPAR.png" />
-                    </button>
-                  </div>
-                </Link>
-              </div>
+              <Link
+                to={`/home/${product.id}`}
+                key={product.id}
+                className={styles.products_card}
+              >
+                <div>{product.name}</div>
+                <img
+                  src={product.imageUrl}
+                  className={styles.products_visual}
+                />
+                <div>
+                  <button className={styles.products_button}>
+                    Additional Info
+                  </button>
+                </div>
+              </Link>
             );
           })}
         </div>

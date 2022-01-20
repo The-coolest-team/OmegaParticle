@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch, connect } from "react-redux";
 import { getCart } from "../store";
 import { Link } from "react-router-dom";
+import styles from "./Checkout.modules.css";
 
 //On checkout, it should send the order to redux and backend to update the server.
 //More work to be done here
@@ -19,8 +20,10 @@ const Checkout = () => {
   if (!auth.id) {
     return (
       <div>
-        Mac, please create an account by clicking Sign up above in order to
-        check out
+        <b>
+          Mac, please create an account by clicking Sign up above in order to
+          check out
+        </b>
       </div>
     );
   } else if (cart.length) {
@@ -32,34 +35,22 @@ const Checkout = () => {
     // console.log(order);
     window.localStorage.removeItem("cart");
     return (
-      <div>
+      <div style={{ padding: "25px", width: "70vw" }}>
         <h1>Thank you for your order of </h1>
         {cart.map((item) => {
           return (
-            <div
-              key={item.productId}
-              style={{
-                display: "flex",
-                padding: "25px",
-                border: "1px solid",
-                borderRadius: "10px",
-                marginBottom: "-1px",
-              }}
-            >
-              <div>{item.name}</div>
-              <img
-                src={item.imageUrl}
-                style={{
-                  maxHeight: "200px",
-                  maxWidth: "200px",
-                  marginRight: "25px",
-                }}
-              />
+            <div key={item.productId} className={styles.products_card}>
+              <div>
+                <b>{item.name}</b>
+              </div>
+              <img src={item.imageUrl} className={styles.products_visual} />
             </div>
           );
         })}
-        <div>Total ${price}</div>
-        <h1>it will arrive in a billion years</h1>
+        <div>
+          <div className={styles.products_button}>Total ${price}</div>
+        </div>
+        <div className={styles.block}></div>
       </div>
     );
   } else {
@@ -68,15 +59,3 @@ const Checkout = () => {
 };
 
 export default Checkout;
-// useEffect(()=> {
-//   !props.isLoggedIn
-// })
-
-// const mapState = (state) => {
-//   return {
-//     isLoggedIn: !!state.auth.id,
-//     userId: state.auth.id,
-//   };
-// };
-
-// export default connect(mapState, null)(Checkout);
