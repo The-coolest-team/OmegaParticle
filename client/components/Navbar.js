@@ -5,39 +5,93 @@ import { logout } from "../store";
 import styles from "./Navbar.modules.css";
 
 const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
-  <div>
-    <div className={styles.Navbar_container}></div>
-    <nav>
-      {isLoggedIn ? (
-        <div className={styles.Navbar_container}>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">
-            <img src={"https://i.imgur.com/8r7XpEd.png"} />
-          </Link>
+  <nav>
+    {isLoggedIn ? (
+      <div className={styles.Navbar_container}>
+        <Link to="/home">
+          <img
+            src={"https://i.imgur.com/8r7XpEd.png"}
+            className={styles.logo}
+          />
+        </Link>
+        <div className={styles.div_Flex}>
+          <div className={styles.Navbar_div}>
+            <input
+              placeholder="Search our amazing array of products"
+              className={styles.Navbar_search}
+            />
+          </div>
+          <img
+            src={"https://i.imgur.com/9yXTEsc.png"}
+            className={styles.Navbar_search_icon}
+          />
+        </div>
+        <div className={styles.div_Flex}>
           <Link to="/cart">
-            <img src={"https://i.imgur.com/W6dORqn.png"} />
+            <img
+              src={"https://i.imgur.com/W6dORqn.png"}
+              className={styles.Navbar_right_div}
+            />
           </Link>
-          {isAdmin && <Link to="/admin">Admin</Link>}
+          {isAdmin && (
+            <Link to="/admin">
+              <img
+                src={"https://i.imgur.com/oKFaPlG.png"}
+                className={styles.Navbar_right_div}
+              />
+            </Link>
+          )}
           <a href="#" onClick={handleClick}>
-            Logout
+            <img
+              src="https://i.imgur.com/XyztwDs.png"
+              className={styles.Navbar_right_div}
+            />
           </a>
         </div>
-      ) : (
-        <div className={styles.Navbar_container}>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/home">
-            <img src={"https://i.imgur.com/8r7XpEd.png"} />
-          </Link>
-          <Link to="/login">
-            <img src={"https://i.imgur.com/KBmLLrT.png"} />
-          </Link>
-          <Link to="/signup">Sign Up</Link>
-          <Link to="/cart">Cart</Link>
+      </div>
+    ) : (
+      <div className={styles.Navbar_container}>
+        <Link to="/home">
+          <img
+            src={"https://i.imgur.com/8r7XpEd.png"}
+            className={styles.logo}
+          />
+        </Link>
+        <div className={styles.div_Flex}>
+          <div className={styles.Navbar_div}>
+            <input
+              placeholder="Search our amazing array of products"
+              className={styles.Navbar_search}
+            />
+          </div>
+          <img
+            src={"https://i.imgur.com/9yXTEsc.png"}
+            className={styles.Navbar_search_icon}
+          />
         </div>
-      )}
-    </nav>
-    <hr />
-  </div>
+        <div className={styles.div_Flex}>
+          <Link to="/login">
+            <img
+              src={"https://i.imgur.com/KBmLLrT.png"}
+              className={styles.Navbar_right_div}
+            />
+          </Link>
+          <Link to="/signup">
+            <img
+              src={"https://i.imgur.com/Glg87c7.png"}
+              className={styles.Navbar_right_div}
+            />
+          </Link>
+          <Link to="/cart">
+            <img
+              src={"https://i.imgur.com/W6dORqn.png"}
+              className={styles.Navbar_right_div}
+            />
+          </Link>
+        </div>
+      </div>
+    )}
+  </nav>
 );
 
 /**

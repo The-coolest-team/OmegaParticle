@@ -1,7 +1,52 @@
-.Navbar_container {
-  background-color: #2a1e5c;
-  color: white;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-.Navbar_container a {
-  color: white;
+/* nav {
+  height: 75px;
+  min-width: 400px;
+} */
+
+.Navbar_container {
+  height: 80px;
+  background-color: #2a1e5c;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  margin-top: 5px;
+  height: 4rem;
+  /* bottom: 50px; */
+  /* height: 50px; */
+}
+
+.div_Flex {
+  display: flex;
+  align-items: center;
+}
+
+.Navbar_div {
+  background-color: white;
+  height: 3rem;
+}
+
+.Navbar_search {
+  height: 3rem;
+  width: 50%;
+  min-width: 400px;
+  border: none;
+}
+
+.Navbar_search_icon {
+  height: 3rem;
+  margin: -5px;
+}
+
+.Navbar_right_div {
+  margin-top: 5px;
+  height: 4rem;
 }
